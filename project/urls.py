@@ -20,4 +20,3 @@ urlpatterns = [
     url(r'^', include('polls.urls', namespace="polls")),
     url(r'^', include('mintel_performance_monitor.urls')),
 ]
-
