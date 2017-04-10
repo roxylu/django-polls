@@ -1,0 +1,9 @@
+{% load staticfiles %}
+{% load performance_monitor_tag %}
+
+{% block include %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+{% enable_performance_monitor %}
+{% endblock %}
+{% block content %}
+{% endblock %}
