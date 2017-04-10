@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+prog=$0
+PYPI_INDEX_URL=http://devpi/pi/
+
+show_usage() {
+    echo "Invalid arguments"
+    echo "Usage: ${prog} [--npm-install] [--skip-python]"
+    exit 1
+}
+
+exit_npm_install () {
+    mv release.json package.json
+    exit 1
+}
+
+die() {
+    echo "$@"
+    exit 1
+}
+
+while (( "$#" )); do
+
+    case "$1" in
+        --npm)
+            skip_python=1
+            ;&
+        --npm-install)
+            npm_install=1
+            ;;
+        --latest-tulsa-bundle)
+            latest_tulsa_bundle=1
+            ;;
+        --skip-python)
+            skip_python=1
+            ;;
+        *)
+            show_usage
+            ;;
+    esac
+
+shift
+
+done
+
+if [ "$skip_python" != "1" ]; then
+
+    if [ ! -d "env" ]; then
+        scl enable python27 "virtualenv env --system-site-packages"
+        scl enable python27 "scl_patch_virtualenv env"
+    fi
+
+    ln -sf env/bin/activate
+    . ./activate
+
+    # upgrade pip
+    pip install --upgrade -i $PYPI_INDEX_URL pip
+
+    # Install wheel
+    pip install --upgrade -i $PYPI_INDEX_URL wheel --trusted-host devpi \
+        || die "Could not install wheel from pypi! Cannot continue"
+
+    pip install --upgrade --no-binary ppt_client,powerpointclient,solr_collections_api,solr-collections,setproctitle,py-setproctitle,setuptools --no-index --find-links http://nfs-server/python/  -r requirements/nfs.pip --trusted-host nfs-server \
+        || die "Could not install python packages from nfs! Cannot continue"
+
+    # install from devpi for public pacakges, this makes switch versions easier
+    pip install --upgrade --no-binary simplejson,django-jenkins,coverage,configparser,mintel-ppt-client2 -i $PYPI_INDEX_URL -r requirements/devpi.pip --trusted-host devpi \
+        || die "Could not install python packages from devpi! Cannot continue"
+
+fi
+
+
