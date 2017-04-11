@@ -9,12 +9,11 @@ venv = os.path.join(root, "env")
 
 def setup_env():
     """Setup the environment variables for the WSGI instance"""
-    from project.find_settings import find_settings
     os.environ.update({
         "PATH": ":".join([os.environ.get("PATH", ""),
                          os.path.join(venv, "bin")]),
         "PYTHON_EGG_CACHE": os.path.join(root, "run", ".wwweggs"),
-        "DJANGO_SETTINGS_MODULE": find_settings(root)
+        "DJANGO_SETTINGS_MODULE": 'project.settings'
     })
 
 
