@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
-    'mintel_performance_monitor',
 )
 
 MIDDLEWARE_CLASSES = (
