@@ -60,11 +60,8 @@ if [ "$skip_python" != "1" ]; then
     pip install --upgrade -i $PYPI_INDEX_URL wheel --trusted-host devpi \
         || die "Could not install wheel from pypi! Cannot continue"
 
-    pip install --upgrade --no-binary ppt_client,powerpointclient,solr_collections_api,solr-collections,setproctitle,py-setproctitle,setuptools --no-index --find-links http://nfs-server/python/  -r requirements/nfs.pip --trusted-host nfs-server \
-        || die "Could not install python packages from nfs! Cannot continue"
-
     # install from devpi for public pacakges, this makes switch versions easier
-    pip install --upgrade --no-binary simplejson,django-jenkins,coverage,configparser,mintel-ppt-client2 -i $PYPI_INDEX_URL -r requirements/devpi.pip --trusted-host devpi \
+    pip install --upgrade --no-binary simplejson,django-jenkins,coverage,configparser,mintel-ppt-client2 -i $PYPI_INDEX_URL -r requirements.txt --trusted-host devpi \
         || die "Could not install python packages from devpi! Cannot continue"
 
 fi
