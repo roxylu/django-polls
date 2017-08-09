@@ -1,1 +1,2 @@
 # django-polls
+# hello, git!
