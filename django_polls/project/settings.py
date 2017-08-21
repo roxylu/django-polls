@@ -25,7 +25,7 @@ SECRET_KEY = ')4o8v!d6pr!95$jm^2d$u38=+n#uud%i47kmjvhi61hud03eua'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dev-roxy02.shanghai.mintel.ad']
 
 
 # Application definition
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'project.wsgi.application'
+#WSGI_APPLICATION = 'project.wsgi.application'
 
 
 # Database
